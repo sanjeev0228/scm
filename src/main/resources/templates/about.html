@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>about Page</title>
 </head>
 <body>
-    <h1>This is about PAGE</h1>
+  <div id="content">
+    <h1>Welcome to about page</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
+      ratione!
+    </p>
+  </div>
+  <script>
+    console.log("about page");
+  </script>
+  <script>
+    console.log("second about page script");
+  </script>
+
 </body>
 </html>

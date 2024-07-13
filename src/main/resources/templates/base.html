@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  th:fragment="parent(content,title,script)"
+  xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=
     , initial-scale=1.0">
-    <title>Document</title>
+    <title data-th-replace="${title}">SCM</title>
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" >
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"  rel="stylesheet" />
 </head>
 <body>
-    
+    <!-- main content -->
+     <section data-th-replace="${content}"></section>
+
+
+
+
+
+
+<!--flow bite content -->
+   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+   <th:block data-th-replace="${script}"></th:block>
 </body>
 </html>
