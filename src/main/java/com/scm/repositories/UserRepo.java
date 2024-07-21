@@ -9,6 +9,9 @@ import com.scm.entities.User;
 
 @Repository
 public interface UserRepo extends  JpaRepository<User,String> {
-Optional<User> FindByEmail(String email);
+    Optional<User> findByEmail(String email);
 
+    Optional<User> findByEmailAndPassword(String email, String password);
+
+    
 }
