@@ -16,7 +16,7 @@ import java.util.List;
 import com.scm.entities.Providers;
 import com.scm.entities.User;
 import com.scm.helpers.AppConstants;
-import com.scm.repsitories.UserRepo;
+import com.scm.repositories.UserRepo;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
