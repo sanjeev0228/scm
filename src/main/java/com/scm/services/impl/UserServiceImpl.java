@@ -3,6 +3,7 @@ package com.scm.services.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,34 +11,48 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scm.entities.User;
+import com.scm.helpers.AppConstants;
+import com.scm.helpers.Helper;
 import com.scm.helpers.ResourceNotFoundException;
 import com.scm.repositories.UserRepo;
+import com.scm.services.EmailService;
 import com.scm.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepo userRepo;
+    private EmailService emailService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {
-        // userid have to generate randome
+        // user id : have to generate
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
-
-        // password endcode
+        // password encode
+        // user.setPassword(userId);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        //set the roles
-        
+        // set the user role
 
-        return userRepo.save(user);
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
+
+        logger.info(user.getProvider().toString());
+        String emailToken = UUID.randomUUID().toString();
+        user.setEmailToken(emailToken);
+        User savedUser = userRepo.save(user);
+        String emailLink = Helper.getLinkForEmailVerificatiton(emailToken);
+        emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart  Contact Manager", emailLink);
+        return savedUser;
+
     }
 
     @Override
@@ -47,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(User user) {
+
         User user2 = userRepo.findById(user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         // update karenge user2 from user
@@ -61,8 +77,8 @@ public class UserServiceImpl implements UserService {
         user2.setPhoneVerified(user.isPhoneVerified());
         user2.setProvider(user.getProvider());
         user2.setProviderUserId(user.getProviderUserId());
-        // save the user in the databases
-        userRepo.save(user2);
+        // save the user in database
+        User save = userRepo.save(user2);
         return Optional.ofNullable(save);
 
     }
@@ -79,14 +95,12 @@ public class UserServiceImpl implements UserService {
     public boolean isUserExist(String userId) {
         User user2 = userRepo.findById(userId).orElse(null);
         return user2 != null ? true : false;
-
     }
 
     @Override
     public boolean isUserExistByEmail(String email) {
-        User user= userRepo.FindByEmail(email).orElse(null);
-        return user != null ? true:false'
-        
+        User user = userRepo.findByEmail(email).orElse(null);
+        return user != null ? true : false;
     }
 
     @Override
@@ -97,6 +111,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userRepo.findByEmail(email).orElse(null);
+
     }
 
 }

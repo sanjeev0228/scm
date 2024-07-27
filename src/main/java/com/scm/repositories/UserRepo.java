@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.scm.entities.User;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, String> {
+public interface UserRepo extends JpaRepository< User, String> {
     // extra methods db relatedoperations
     // custom query methods
     // custom finder methods
