@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.helpers.ResourceNotFoundException;
-import com.scm.repositories.*;
+import com.scm.repsitories.ContactRepo;
 import com.scm.services.ContactService;
 
 @Service

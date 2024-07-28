@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Component
 public class SessionHelper {
+
     public static void removeMessage() {
         try {
             System.out.println("removing message from session");

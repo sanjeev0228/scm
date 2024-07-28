@@ -18,7 +18,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-public class SocailLink {
+public class SocialLink {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +28,4 @@ public class SocailLink {
 
     @ManyToOne
     private Contact contact;
-
-
-
 }
